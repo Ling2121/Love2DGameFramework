@@ -1,5 +1,5 @@
-local scene = ling_import("module/game/scene")
-local signal = ling_import("misc/signal")
+local scene = require"module/game/scene"
+local signal = require"misc/signal"
 
 local game = class("game",signal){
     all_scene = {},

@@ -1,4 +1,4 @@
-local node = require"library/list/node"
+local node = require"module/struct/list/node"
 
 local list = class("list"){
     __root_node = {},

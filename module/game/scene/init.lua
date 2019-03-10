@@ -1,6 +1,6 @@
-local list = ling_import"misc/depth_list"
-local camera = ling_import"library/camera"
-local signal = ling_import"misc/signal"
+local list = require"module/struct/depth_list"
+local camera = require"module/game/camera"
+local signal = require"misc/signal"
 
 local scene = class("scene"){
     scene_name = "",

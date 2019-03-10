@@ -1,5 +1,5 @@
-local list = require"library/list"
-local node = require"library/depth_list/node"
+local list = require"module/struct/list/"
+local node = require"module/struct/depth_list/node"
 
 local function ins_node(self,node)
     if self:is_empty() then

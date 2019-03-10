@@ -1,5 +1,6 @@
-local node = require"library/scene/node"
-
+local node = require"module/game/scene/node"
+--hump.camera:
+--https://github.com/vrld/hump
 local camera = class("camera",node){
     x = x, 
     y = y, 
