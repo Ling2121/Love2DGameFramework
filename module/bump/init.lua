@@ -1,5 +1,5 @@
-local hc_shapes = ling_import"library/HC.shapes"
-local body = ling_import"module/bump/bump_body"
+local hc_shapes = require"library/HC.shapes"
+local body = require"module/bump/bump_body"
 
 return {
     new_world = ling_import"module/bump/world",

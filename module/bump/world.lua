@@ -1,4 +1,4 @@
-local world = ling_import"library/hc.spatialhash"
+local world = require"library/hc.spatialhash"
 
 function world:is_at_world(object)
     if not object then return end
