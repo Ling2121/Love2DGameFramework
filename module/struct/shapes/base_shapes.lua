@@ -6,7 +6,7 @@ function base_shapes:__init(type)
     self.__shapes_type = type
 end
 
-function base_shapes:get_type()
+function base_shapes:get_shapes_type()
     return self.__shapes_type
 end
 
