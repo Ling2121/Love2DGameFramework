@@ -1,0 +1,3 @@
+local object = class("object"){
+    
+}
