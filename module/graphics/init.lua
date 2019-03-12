@@ -1,4 +1,4 @@
 return {
-    new_texture = ling_import"module/graphics/texture",
-    new_anim = ling_import"module/graphics/anim"
+    new_texture = require"module/graphics/texture",
+    new_anim = require"module/graphics/anim"
 }
