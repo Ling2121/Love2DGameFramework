@@ -39,7 +39,11 @@ function area:mousepressed(x,y,b)
 end
 
 function area:draw()
-    love.graphics.setColor(200,0,0,150)
+    local a = 100
+    if self.__is_select then
+        a = 255
+    end
+    love.graphics.setColor(200,0,0,a)
     rectangle.draw("fill",self.x,self.y)
     love.graphics.setColor(255,255,255,255)
 end
