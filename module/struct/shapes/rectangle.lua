@@ -19,6 +19,12 @@ function rectangle:get_height()
     return self.height
 end
 
+function rectangle:set_box(w,h)
+    self.width = w or 1
+    self.height = h or 1
+    return self
+end
+
 function rectangle:draw(mode,x,y)
     love.graphics.rectangle(mode,x,y,self.w,self.h)
 end

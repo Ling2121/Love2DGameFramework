@@ -1,23 +1,15 @@
-local object = require"object/object"
+local rectangle = require"module/struct/shapes/rectangle"
 
-local area = class("area",object){
+local area = class("area",object,rectangle){
     x = 0,
     y = 0,
-    w = 0,
-    h = 0,
     __is_select = false,
-
-    __enter_rel__ = false,
-    __exit_rel__ = false,
-    __select_rel__ = false,
 }
 
 function area:__init(x,y,w,h)
-    object.__init(self)
+    rectangle.__init(self,w,h)
     self.x = x or 0
     self.y = y or 0
-    self.w = w or 1
-    self.h = h or 1
     self:__init_signal__()
 end
 
@@ -25,13 +17,6 @@ function area:__init_signal__()
     self:signal("mouse_enter")
     self:signal("mouse_exit")
     self:signal("mouse_click")
-    object.__init_signal__(self)
-end
-
-function area:set_box(w,h)
-    self.w = w or 1
-    self.h = h or 1
-    return self
 end
 
 function area:bbox()

@@ -1,8 +1,7 @@
 local list = require"library/depth_list"
 local node = require"library/scene/node"
-local scene = require"library/scene"
 
-local area_mng = class("area_mng",scene,node){
+local area_mng = class("area_mng",node){
     area = nil,
     inst_test = false,
 }

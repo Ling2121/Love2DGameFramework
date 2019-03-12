@@ -4,7 +4,7 @@ local signal = require"misc/signal"
 
 local scene = class("scene"){
     scene_name = "",
-    nodes = {},
+    nodes = nil,
     __is_init = false,
     __is_update = true,
     __at_game_mng = nil,
@@ -12,6 +12,7 @@ local scene = class("scene"){
 
 function scene:__init(name)
     self.camera = camera()
+    self.nodes = list()
     self.scene_name = name
     self:__init_signal__()
     self:__init_callback__()
