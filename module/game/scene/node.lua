@@ -8,6 +8,10 @@ local node = class("scene_node",depth_node,signal){
 
 function node:__init(name)
     self.__node_name = name or self
+    self:__init_signal__()
+end
+
+function node:__init_signal__()
     self:signal("enter_wait")
     self:signal("exit_wait")
     self:signal("exit_scene")

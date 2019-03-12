@@ -1,45 +1,27 @@
 local list = require"library/depth_list"
+local scene = require"library/scene"
 local node = require"library/scene/node"
 
 local area_mng = class("area_mng",node){
     area = nil,
-    inst_test = false,
 }
 
 function area_mng:__init()
     node.__init(self)
-    self.nodes = list()
-    self:__init_callback__()
-end
-
-function area_mng:__init_callback__()
-    for i,n in ipairs(love_callback) do
-        if not self[n] then
-            self[n] = function(self,...)
-                if self.area then
-                    if self.area[n] then
-                        self.area[n](self.area,...)
-                    end
-                end
-            end
-        end    
-    end
+    self.area = list()
 end
 
 function area_mng:update(dt)
     local up_area = self.area
     
     if self.__is_update then
-        for node in self.nodes:items() do
-            if node.__depth_change then
-                self.nodes:update_node_depth(node)
-            end
-            if node.update then
-                node:update(dt)
+        for area in self.area:items() do
+            if area.__depth_change then
+                self.nodes:update_node_depth(area)
             end
 
-            if node:is_hover() then
-                self.area = node
+            if area:is_hover() then
+                self.area = area
             end
         end
     end 
@@ -76,14 +58,6 @@ function area_mng:update(dt)
                 area.__exit_rel__ = false
                 self.area = nil
             end
-        end
-    end
-end
-
-function area_mng:draw()
-    for area in self.nodes:items() do
-        if area.draw then
-            area:draw()
         end
     end
 end

@@ -1,6 +1,7 @@
 local rectangle = require"module/struct/shapes/rectangle"
+local node = require"library/scene/node2d"
 
-local area = class("area",object,rectangle){
+local area = class("area",node,rectangle){
     x = 0,
     y = 0,
     __is_select = false,
