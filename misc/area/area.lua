@@ -1,7 +1,7 @@
 local rectangle = require"module/struct/shapes/rectangle"
-local node = require"library/scene/node2d"
+local node2d = require"library/scene/node2d"
 
-local area = class("area",node,rectangle){
+local area = class("area",node2d,rectangle){
     x = 0,
     y = 0,
     __is_select = false,
@@ -15,13 +15,15 @@ function area:__init(x,y,w,h)
 end
 
 function area:__init_signal__()
+    node2d.__init_signal__(self)
     self:signal("mouse_enter")
     self:signal("mouse_exit")
     self:signal("mouse_click")
 end
 
 function area:bbox()
-    return self.x,self.y,self.x + self.w,self.y + self.h
+    local x,y = self:get_wpos()
+    return x,y,x + self.w,y + self.h
 end
 
 function area:is_hover()
@@ -37,7 +39,9 @@ function area:mousepressed(x,y,b)
 end
 
 function area:draw()
-    love.graphics.rectangle("line",self.x,self.y,self.w,self.h)
+    love.graphics.setColor(200,0,0,150)
+    rectangle.draw("fill",self.x,self.y)
+    love.graphics.setColor(255,255,255,255)
 end
 
 return area
