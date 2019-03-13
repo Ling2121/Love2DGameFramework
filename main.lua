@@ -2,8 +2,11 @@ local ling = require"ling_init"
 
 local game = require"module/game"()
 local scene = require"module/game/scene"("test_scene")
-local ui_box = require"module/gui/ui_box"():set_drag(true)
+local ui_box = require"module/gui/ui_box"():set_drag(true):set_view(1)
 local label = require"module/gui/controls/label"
+
+local cam = scene:get_node("camera")
+cam:lookAt(0,0)
 
 local label_a = label("Hello",0,0,{
     font_color = {100,100,0,255},

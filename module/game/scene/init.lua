@@ -5,15 +5,16 @@ local signal = require"misc/signal"
 local scene = class("scene",signal){
     scene_name = "",
     nodes = nil,
+    static_node = {},
     __is_init = false,
     __is_update = true,
     __at_game_mng = nil,
 }
 
 function scene:__init(name)
-    self.camera = camera()
     self.nodes = list()
     self.scene_name = name
+    self:add_node(camera():set_node_name("camera"),true)
     self:__init_signal__()
     self:__init_callback__()
     self:connect(self,"scene_init","init")
@@ -53,25 +54,39 @@ function scene:get_node(name)
     return self.nodes.__all_node[name]
 end
 
-function scene:add_node(node,view_id)
+function scene:add_node(node,is_static)
     local node_name = node.__node_name or node
-    self.nodes:insert_node(node)
-    :_enter_scene(self)
-    :set_node_name(node_name)
-    :set_view(view_id or node.__view_id)
+    if not is_static then
+        node.__is_static = false
+        self.nodes:insert_node(node)
+        :_enter_scene(self)
+        :set_node_name(node_name)
 
-    self:release("add_node",node)
+        self:release("add_node",node)
+    else
+        node.__is_static = true
+        self.nodes.__all_node[node] = node
+        self.nodes.__all_node[node.__node_name] = node
+    end
+
+    return self
 end
 
 function scene:remove_node(node_or_name)
     if node_or_name then
         local nodes = self.nodes
         local node = nodes.__all_node[node_or_name]
-        if node then
-            nodes:remove_self(node)
-            nodes.__all_node[node.__node_name] = nil
 
-            self:release("remove_node",node)
+        if node then
+            if node.__is_static then
+                self.nodes.__all_node[node] = node
+                self.nodes.__all_node[node.__node_name] = node
+            else
+                nodes:remove_self(node)
+                nodes.__all_node[node.__node_name] = nil
+
+                self:release("remove_node",node)
+            end
         end
     end
 end
@@ -93,10 +108,11 @@ function scene:draw()
     for node in self.nodes:items() do
         if node.draw then
             local view_id = node.__view_id
+            local camera = self:get_node("camera")
             if view_id == 1 then
-                self.camera:draw_begin()
+                camera:draw_begin()
                 node:draw()
-                self.camera:draw_end()
+                camera:draw_end()
             elseif view_id == 2 then
                 node:draw()
             end

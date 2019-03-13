@@ -5,6 +5,7 @@ local node = class("scene_node",depth_node,signal){
     __node_name = nil,
     __at_scene = nil,
     __wait = false,
+    __is_static = false,
 }
 
 function node:__init(name)
@@ -20,14 +21,6 @@ function node:__init_signal__()
 end
 
 function node:set_node_name(name)
-    name = name or self
-    local at_scene = self.__at_scene
-    if at_scene then
-        local nodes = at_scene.nodes
-        if not nodes.__all_node[name] then
-            nodes.__all_node[name] = self
-        end
-    end
     self.__node_name = name
     return self
 end

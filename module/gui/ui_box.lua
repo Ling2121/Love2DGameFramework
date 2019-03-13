@@ -28,6 +28,9 @@ end
 function ui_box:add_controls(contrls)
     area_mng.add_area(self,contrls)
     contrls.__view_id = self.__view_id
+    if not contrls.root then
+        contrls.root = self
+    end
     return self
 end
 
@@ -57,7 +60,6 @@ function ui_box:mousereleased(...)
 end
 
 function ui_box:update(dt)
-    base_ui.update(self,dt)
     local area = self.area
     if area then
         if area.update then
@@ -65,9 +67,11 @@ function ui_box:update(dt)
         end
         if not area.locking then
             area_mng.update(self,dt)
+            base_ui.update(self,dt)
         end
     else
         area_mng.update(self,dt)
+        base_ui.update(self,dt)
     end
 end
 
