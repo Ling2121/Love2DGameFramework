@@ -2,7 +2,7 @@ local list = require"module/struct/depth_list"
 local camera = require"module/game/camera"
 local signal = require"misc/signal"
 
-local scene = class("scene"){
+local scene = class("scene",signal){
     scene_name = "",
     nodes = nil,
     __is_init = false,
@@ -94,9 +94,9 @@ function scene:draw()
         if node.draw then
             local view_id = node.__view_id
             if view_id == 1 then
-                self.camera:attach()
+                self.camera:draw_begin()
                 node:draw()
-                self.camera:detach()
+                self.camera:draw_end()
             elseif view_id == 2 then
                 node:draw()
             end

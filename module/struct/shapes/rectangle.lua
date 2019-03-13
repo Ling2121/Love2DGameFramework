@@ -26,7 +26,7 @@ function rectangle:set_box(w,h)
 end
 
 function rectangle:draw(mode,x,y)
-    love.graphics.rectangle(mode,x,y,self.w,self.h)
+    love.graphics.rectangle(mode,x,y,self.width,self.height)
 end
 
 return rectangle

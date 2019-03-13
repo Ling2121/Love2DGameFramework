@@ -11,8 +11,11 @@ function game:__init()
 
     for i,call_name in ipairs(love_callback) do
         love[call_name] = function(...)
-            if self.scene[call_name] then
-                self.scene[call_name](self.scene,...)
+            local scene = self.scene
+            if scene then
+                if scene[call_name] then
+                    scene[call_name](scene,...)
+                end
             end
         end
     end
@@ -30,6 +33,7 @@ function game:add_scene(scene)
     if not scene then return end
     scene.__at_game_mng = self
     self.all_scene[scene.scene_name] = scene
+    return self
 end
 
 function game:change_scene(name_or_scene)
@@ -41,7 +45,8 @@ function game:change_scene(name_or_scene)
     end
     cs:release("scene_load",cs)
     self.scene = cs
+    return self
 end
 
-return game()
+return game
 

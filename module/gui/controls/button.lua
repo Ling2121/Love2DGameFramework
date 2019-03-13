@@ -1,5 +1,5 @@
 local base_ui = ling_import"module/gui/controls/base_ui"
-local rect = ling_import"module/graphics/rect"
+local rect = ling_import"module/graphics/rectangle"
 
 local button = class("controls_button",base_ui){
     label = "button",

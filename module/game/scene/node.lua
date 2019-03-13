@@ -1,4 +1,5 @@
 local depth_node = require"module/struct/depth_list/node"
+local signal = require"misc/signal"
 
 local node = class("scene_node",depth_node,signal){
     __node_name = nil,

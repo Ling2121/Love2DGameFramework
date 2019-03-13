@@ -1,5 +1,5 @@
 local rectangle = require"module/struct/shapes/rectangle"
-local node2d = require"library/scene/node2d"
+local node2d = require"module/game/scene/node2d"
 
 local area = class("area",node2d,rectangle){
     x = 0,
@@ -24,7 +24,7 @@ end
 
 function area:bbox()
     local x,y = self:get_wpos()
-    return x,y,x + self.w,y + self.h
+    return x,y,x + self.width,y + self.height
 end
 
 function area:is_hover()

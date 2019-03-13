@@ -1,4 +1,4 @@
-local area = ling_import"misc/area/area"
+local area = require"misc/area/area"
 
 local base_ui = class("base_ui",area){
     root = nil,
@@ -64,15 +64,13 @@ function base_ui:drag_move()
 end
 
 function base_ui:drag_update_offset(mox,moy)
-    local x,y = self:get_transform_pos()
-    local mng = self.__at_scene
-
-    self._drag_ofs.x = mox - x + mng.ox
-    self._drag_ofs.y = moy - y + mng.oy
+    self._drag_ofs.x = mox - self.x
+    self._drag_ofs.y = moy - self.y
 end
 
-function base_ui:update(mox,moy)
+function base_ui:update()
     if self.drag and self._drag then
+        local mox,moy = love.mouse.getPosition()
         self:drag_move(mox,moy)
         self:release("sliding")
     end
