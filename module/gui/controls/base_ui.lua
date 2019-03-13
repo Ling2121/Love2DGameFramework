@@ -24,7 +24,7 @@ end
 function base_ui:get_wpos()
     local x,y = self:get_pos()
     if self.__view_id == 1 then
-        local cam = self:get_node("camera")
+        local cam = self:get_root(0):get_node("camera")
         if cam then
             return cam:to_world_pos(x,y)
         end
@@ -35,11 +35,23 @@ end
 function base_ui:get_root(layer)
     if layer then
         local root = self.root
-        while layer >= 1 do
-            layer = layer - 1
-            root = root.root
-            if not root then
-                return nil
+
+        if layer == 0 then--获取第一个根
+            if root then
+                while root.root ~= nil do
+                    root = root.root
+                end
+                return root
+            else
+                return self
+            end
+        else
+            while layer >= 1 do
+                layer = layer - 1
+                root = root.root
+                if not root then
+                    return nil
+                end
             end
         end
         return root

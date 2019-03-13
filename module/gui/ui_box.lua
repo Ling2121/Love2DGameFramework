@@ -39,12 +39,10 @@ function ui_box:remove_contrls(contrls)
     return self
 end
 
-function ui_box:get_origin()
-    return self:get_pos()
-end
-
 function ui_box:mousepressed(...)
-    base_ui.mousepressed(self,...)
+    if self.__is_select then
+        base_ui.mousepressed(self,...)
+    end
     local area = self.area
     if area and area.mousepressed then
         area:mousepressed(...)
@@ -52,7 +50,9 @@ function ui_box:mousepressed(...)
 end
 
 function ui_box:mousereleased(...)
-    base_ui.mousereleased(self,...)
+    if self.__is_select then
+        base_ui.mousereleased(self,...)
+    end
     local area = self.area
     if area and area.mousereleased then
         area:mousereleased(...)
@@ -60,6 +60,10 @@ function ui_box:mousereleased(...)
 end
 
 function ui_box:update(dt)
+    if not self.root then
+        self.__is_select = self:is_hover()
+    end
+
     local area = self.area
     if area then
         if area.update then
@@ -67,7 +71,10 @@ function ui_box:update(dt)
         end
         if not area.locking then
             area_mng.update(self,dt)
-            base_ui.update(self,dt)
+
+            if self.__is_select then
+                base_ui.update(self,dt)
+            end
         end
     else
         area_mng.update(self,dt)
@@ -76,14 +83,14 @@ function ui_box:update(dt)
 end
 
 function ui_box:draw()
-    local x,y = self:get_pos()
+    local x,y = self:get_wpos()
     local sx, sy, sw, sh = love.graphics.getScissor()
     love.graphics.setScissor(x,y,self.width,self.height)
     for ui in self.all_area:items() do
         ui:draw()
     end
-    love.graphics.rectangle("line",x,y,self.width,self.height)
     love.graphics.setScissor(sx, sy, sw, sh)
+    love.graphics.rectangle("line",self.x,self.y,self.width,self.height)
 end
 
 return ui_box

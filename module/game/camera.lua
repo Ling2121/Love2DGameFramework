@@ -1,6 +1,9 @@
 local node = require"module/game/scene/node"
 --hump.camera:
 --https://github.com/vrld/hump
+
+local cos, sin = math.cos, math.sin
+
 local camera = class("camera",node){
     x = x, 
     y = y, 
