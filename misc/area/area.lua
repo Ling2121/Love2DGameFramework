@@ -5,6 +5,7 @@ local area = class("area",node2d,rectangle){
     x = 0,
     y = 0,
     __is_select = false,
+    __at_area_mng = nil,
 }
 
 function area:__init(x,y,w,h)

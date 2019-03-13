@@ -8,18 +8,27 @@ local area_mng = class("area_mng",node){
 
 function area_mng:__init()
     node.__init(self)
-    self.area = list()
+    self.all_area = list()
+end
+
+function area_mng:add_area(area)
+    self.all_area:insert_node(area)
+    area.__at_area_mng = self
+end
+
+function area_mng:remove_area(area)
+    self.all_area:remove_self(area)
+    area.__at_area_mng = nil
 end
 
 function area_mng:update(dt)
     local up_area = self.area
     
     if self.__is_update then
-        for area in self.area:items() do
+        for area in self.all_area:items() do
             if area.__depth_change then
-                self.nodes:update_node_depth(area)
+                self.all_area:update_node_depth(area)
             end
-
             if area:is_hover() then
                 self.area = area
             end
@@ -30,7 +39,7 @@ function area_mng:update(dt)
 
 
     if area then
-        if not self:is_node(area) then
+        if not self.all_area.__all_node[area] then
             area.__is_select = false
             self.area = nil
         else

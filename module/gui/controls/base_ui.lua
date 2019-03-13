@@ -5,44 +5,46 @@ local base_ui = class("base_ui",area){
     style = {},
     drag = false,
     locking = false,
-    exe_root_cb = true,
-    _drag = false,
     _drag_ofs = {x = 0,y = 0},
 }
 
-function base_ui:__init(...)
-    area.__init(self,...)
+function base_ui:__init_signal__()
+    area.__init_signal__(self)
     self:signal("sliding")
 end
 
 function base_ui:get_pos()
-    local root = self.root
-    local x,y = self.x,self.y
-    if root then
-        local rx,ry = root:get_pos()
-        return rx + x,ry + y
+    local rx,ry = 0,0
+    if self.root then
+        rx,ry = self.root:get_pos()
+    end
+    return rx + self.x,ry + self.y
+end
+
+function base_ui:get_wpos()
+    local x,y = self:get_pos()
+    if self.__view_id == 1 then
+        local cam = self:get_node("camera")
+        if cam then
+            return cam:to_world_pos(x,y)
+        end
     end
     return x,y
 end
 
-function base_ui:get_transform_pos()
-    local mng = self.__at_scene
-    local x,y = self:get_pos()
-    return mng.ox + x,mng.oy + y
-end
-
-function base_ui:get_world_pos()
-    local x,y = self:get_transform_pos()
-    if self.__at_scene then
-        local camera = self.__at_scene.camera
-        if self.__view_id == 1 then
-            return camera:world_to_camera(x,y)
-        else
-            return x,y
+function base_ui:get_root(layer)
+    if layer then
+        local root = self.root
+        while layer >= 1 do
+            layer = layer - 1
+            root = root.root
+            if not root then
+                return nil
+            end
         end
-    else
-        return x,y
+        return root
     end
+    return self.root
 end
 
 function base_ui:set_root(root)
