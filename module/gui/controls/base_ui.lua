@@ -6,6 +6,7 @@ local base_ui = class("base_ui",area){
     drag = false,
     locking = false,
     _drag_ofs = {x = 0,y = 0},
+    __at_box = nil,
 }
 
 function base_ui:__init_signal__()

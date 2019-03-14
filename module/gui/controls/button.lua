@@ -1,28 +1,65 @@
-local base_ui = ling_import"module/gui/controls/base_ui"
-local rect = ling_import"module/graphics/rectangle"
+local base_ui = require"module/gui/controls/base_ui"
+local _label = require"module/gui/controls/label"
+local rectangle = require"module/graphics/rectangle"
 
-local button = class("controls_button",base_ui){
-    label = "button",
+local button = class("button",base_ui){
+    label = nil,
     draw_index = "default",
+    style = {
+        font = ling.font.default,
+        font_color = {255,255,255,255},
+        default = rectangle("fill",0,0,{180,180,95,255}),
+        hover   = rectangle("fill",0,0,{200,200,140,255}),
+        hit     = rectangle("fill",0,0,{220,220,150,255}),
+    }
 }
 
 function button:__init(label,x,y,w,h,style)
     base_ui.__init(self,x,y,w,h)
     self:_init_style(label,style)
-    self:signal("mouse_hit")
-    self:signal("mouse_lift")
+    local font = self.style.font
+    local lx = self.width / 2 - font:getWidth(label) / 2
+    local ly = self.height / 2 - font:getHeight() / 2
+    self.label = _label(label,lx,ly,{
+       font = self.style.font,
+       font_color = self.font_color,
+    }):set_root(self)
+
     self:connect(self,"mouse_enter","__mouse_enter__")
     self:connect(self,"mouse_exit","__mouse_exit__")
+    self:connect(self,function(self) return self.__at_box end,"add_object","__add__")
+    self:connect(self,function(self) return self.__at_box end,"remove_object","__remove__")
 end
 
-function button:_init_style(label,style)
+function button:__init_signal__()
+    base_ui.__init_signal__(self)
+    self:signal("mouse_hit")
+    self:signal("mouse_lift")
+end
+
+function button:_init_style(style)
     style = style or {}
-    self.label = label or "button"
-    self.style.font         = style.font
-    self.style.font_color   = style.font_color or {104,18,0,255}
-    self.style.default      = style.default or rect("fill",self.w,self.h,{255,123,0,255})
-    self.style.hover        = style.hover   or rect("fill",self.w,self.h,{255,160,65,255})
-    self.style.hit          = style.hit     or rect("fill",self.w,self.h,{255,200,110,255})
+    self.style.font         = style.font or ling.font.default
+    self.style.font_color   = style.font_color or self.style.font_color
+    self.style.default      = style.default or self.style.default 
+    self.style.hover        = style.hover   or self.style.hover
+    self.style.hit          = style.hit     or self.style.hit
+end
+
+function button:__add__(ui_box)
+    ui_box:add_controls(self.label)
+end
+
+function button:__remove__(ui_box)
+    ui_box:remove_controls(self.label)
+end
+
+function button:__mouse_enter__()
+    self.draw_index = "hover"
+end
+
+function button:__mouse_exit__()
+    self.draw_index = "default"
 end
 
 function button:mousepressed(mox,moy)
@@ -37,36 +74,10 @@ function button:mousereleased(mox,moy,button)
     base_ui.mousereleased(self,mox,moy)
 end
 
-function button:__mouse_enter__()
-    self.draw_index = "hover"
-end
-
-function button:__mouse_exit__()
-    self.draw_index = "default"
-end
-
-function button:draw_label(x,y)
-    local label = self.label
-    local self_font = self.style.font
-    local font = self_font or ling.default_font
-    x = x + (self.w / 2 - font:getWidth(label) / 2)
-    y = y + (self.h / 2 - font:getHeight() / 2)
-    if self_font then
-        love.graphics.setFont(font)
-    end
-    love.graphics.setColor(unpack(self.style.font_color))
-    love.graphics.print(label,x,y)
-    love.graphics.setColor(255,255,255,255)
-    if self_font then
-        love.graphics.setFont(ling.default_font)
-    end
-end
-
 function button:draw()
     local tex = self.style[self.draw_index]
-    local x,y = self:get_transform_pos()
+    local x,y = self:get_pos()
     tex:draw(x,y)
-    self:draw_label(x,y)
 end
 
 return button

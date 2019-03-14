@@ -1,4 +1,4 @@
-local _rectangle = require"module/struct/shapes/_rectangle"
+local _rectangle = require"module/struct/shapes/rectangle"
 
 local rectangle = class("rectangle",_rectangle){
     mode = "fill",

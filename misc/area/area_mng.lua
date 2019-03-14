@@ -11,14 +11,22 @@ function area_mng:__init()
     self.all_area = list()
 end
 
+function area_mng:__init_signal__()
+    node.__init_signal__(self)
+    self:signal("add_object")
+    self:signal("remove_object")
+end
+
 function area_mng:add_area(area)
     self.all_area:insert_node(area)
+    self:local_release("add_object",{area},self)
     area.__at_area_mng = self
     return self
 end
 
 function area_mng:remove_area(area)
     self.all_area:remove_self(area)
+    self:local_release("remove_object",{area},self)
     area.__at_area_mng = nil
     return self
 end

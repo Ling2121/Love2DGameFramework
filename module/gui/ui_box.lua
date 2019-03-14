@@ -31,11 +31,13 @@ function ui_box:add_controls(contrls)
     if not contrls.root then
         contrls.root = self
     end
+    contrls.__at_box = self
     return self
 end
 
 function ui_box:remove_contrls(contrls)
     area_mng.remove_area(self,contrls)
+    contrls.__at_box = nil
     return self
 end
 
