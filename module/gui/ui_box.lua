@@ -19,6 +19,11 @@ function ui_box:__init_callback__()
                 local area = self.area
                 if area and area[call_name] then
                     area[call_name](area,...)
+                    for child in pairs(area.child) do
+                        if child[call_name] then
+                            child[call_name](child,...)
+                        end   
+                    end
                 end
             end
         end
@@ -32,6 +37,10 @@ function ui_box:add_controls(contrls)
         contrls.root = self
     end
     contrls.__at_box = self
+
+    for child in pairs(contrls.child) do
+        self:add_controls(child)
+    end
     return self
 end
 
@@ -73,7 +82,6 @@ function ui_box:update(dt)
         end
         if not area.locking then
             area_mng.update(self,dt)
-
             if self.__is_select then
                 base_ui.update(self,dt)
             end

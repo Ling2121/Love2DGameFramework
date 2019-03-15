@@ -6,29 +6,29 @@ local button = class("button",base_ui){
     label = nil,
     draw_index = "default",
     style = {
-        font = ling.font.default,
-        font_color = {255,255,255,255},
-        default = rectangle("fill",0,0,{180,180,95,255}),
-        hover   = rectangle("fill",0,0,{200,200,140,255}),
-        hit     = rectangle("fill",0,0,{220,220,150,255}),
+        font = nil,
+        font_color = nil,
+        default = nil,
+        hover   = nil,
+        hit     = nil,
     }
 }
 
 function button:__init(label,x,y,w,h,style)
     base_ui.__init(self,x,y,w,h)
     self:_init_style(label,style)
+    :set_depth(self.y)
     local font = self.style.font
     local lx = self.width / 2 - font:getWidth(label) / 2
     local ly = self.height / 2 - font:getHeight() / 2
+
     self.label = _label(label,lx,ly,{
        font = self.style.font,
-       font_color = self.font_color,
-    }):set_root(self)
+       font_color = self.style.font_color,
+    }):set_root(self):set_depth(self.y + 1)
 
     self:connect(self,"mouse_enter","__mouse_enter__")
     self:connect(self,"mouse_exit","__mouse_exit__")
-    self:connect(self,function(self) return self.__at_box end,"add_object","__add__")
-    self:connect(self,function(self) return self.__at_box end,"remove_object","__remove__")
 end
 
 function button:__init_signal__()
@@ -39,19 +39,14 @@ end
 
 function button:_init_style(style)
     style = style or {}
+    local w,h = self.width,self.height
     self.style.font         = style.font or ling.font.default
-    self.style.font_color   = style.font_color or self.style.font_color
-    self.style.default      = style.default or self.style.default 
-    self.style.hover        = style.hover   or self.style.hover
-    self.style.hit          = style.hit     or self.style.hit
-end
+    self.style.font_color   = style.font_color or {255,255,255,255}
+    self.style.default      = style.default or rectangle("fill",w,h,{180,180,95,255}) 
+    self.style.hover        = style.hover   or rectangle("fill",w,h,{200,200,140,255})
+    self.style.hit          = style.hit     or rectangle("fill",w,h,{220,220,150,255})
 
-function button:__add__(ui_box)
-    ui_box:add_controls(self.label)
-end
-
-function button:__remove__(ui_box)
-    ui_box:remove_controls(self.label)
+    return self
 end
 
 function button:__mouse_enter__()

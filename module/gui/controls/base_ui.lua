@@ -1,7 +1,8 @@
 local area = require"misc/area/area"
 
 local base_ui = class("base_ui",area){
-    root = nil,
+    root = nil,--坐标root
+    child = {},
     style = {},
     drag = false,
     locking = false,

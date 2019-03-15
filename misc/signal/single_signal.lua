@@ -3,7 +3,7 @@ local single_signal = class("single_signal"){
     all_connect = {},
 }
 
-function single_signal:add_connect(object,conn_func_name)
+function single_signal:connect(object,conn_func_name)
     local i = #self.all_connect + 1
     local conn = {
         object = object,
@@ -15,7 +15,7 @@ function single_signal:add_connect(object,conn_func_name)
 end
 
 function single_signal:release(...)
-    for connect in ipairs(self.all_connect) do
+    for i,connect in ipairs(self.all_connect) do
         local obj = connect.object
         local conn_func = obj[connect.fname]
         conn_func(obj)--执行对应连接函数
