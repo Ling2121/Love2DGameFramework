@@ -3,7 +3,6 @@ local area = require"misc/area/area"
 local base_ui = class("base_ui",area){
     root = nil,
     fuse = nil,
-    is_fuse_root = true,
     child = {},
     style = {},
     drag = false,
