@@ -19,11 +19,6 @@ function ui_box:__init_callback__()
                 local area = self.area
                 if area and area[call_name] then
                     area[call_name](area,...)
-                    for child in pairs(area.child) do
-                        if child[call_name] then
-                            child[call_name](child,...)
-                        end   
-                    end
                 end
             end
         end

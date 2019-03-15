@@ -15,14 +15,12 @@ local label_a = label("Hello",0,0,{
 
 local label_b = label("Hello",100,100,{
     font_color = {100,100,0,255},
-}):set_drag(true)
-
-label_b.root = label_a
+}):set_drag(true):set_root(label_a)
 
 local button_a = button("Button",200,100,100,40):set_drag(true)
 
 ui_box:add_controls(label_a)
-ui_box:add_controls(label_b)
+
 ui_box:add_controls(button_a)
 scene:add_node(ui_box)
 

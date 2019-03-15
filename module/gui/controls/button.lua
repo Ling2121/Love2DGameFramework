@@ -27,6 +27,7 @@ function button:__init(label,x,y,w,h,style)
        font_color = self.style.font_color,
     }):set_root(self):set_depth(self.y + 1)
 
+    self:add_fuse(self.label)
     self:connect(self,"mouse_enter","__mouse_enter__")
     self:connect(self,"mouse_exit","__mouse_exit__")
 end

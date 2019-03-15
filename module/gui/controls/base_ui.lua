@@ -1,7 +1,9 @@
 local area = require"misc/area/area"
 
 local base_ui = class("base_ui",area){
-    root = nil,--坐标root
+    root = nil,
+    fuse = nil,
+    is_fuse_root = true,
     child = {},
     style = {},
     drag = false,
@@ -62,7 +64,22 @@ function base_ui:get_root(layer)
 end
 
 function base_ui:set_root(root)
+    if self.root then
+        self.root.child[self] = nil
+    end
     self.root = root
+    self.root.child[self] = self
+    return self
+end
+
+function base_ui:add_fuse(object)
+    self.fuse[object] = object
+    object.is_fuse_root = false
+    return self
+end
+
+function base_ui:set_is_fuse_root(bool)
+    self.is_fuse_root = bool
     return self
 end
 
