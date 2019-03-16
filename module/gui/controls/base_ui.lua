@@ -27,7 +27,7 @@ end
 function base_ui:get_wpos()
     local x,y = self:get_pos()
     if self.__view_id == 1 then
-        local cam = self:get_root(0):get_node("camera")
+        local cam = get_node("camera")
         if cam then
             return cam:to_world_pos(x,y)
         end

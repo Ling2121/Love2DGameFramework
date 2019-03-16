@@ -30,13 +30,11 @@ end
 function ui_mng:add_controls(contrls)
     area_mng.add_area(self,contrls)
     contrls.__view_id = self.__view_id
-    contrls.__at_box = self
     return self
 end
 
 function ui_mng:remove_contrls(contrls)
     area_mng.remove_area(self,contrls)
-    contrls.__at_box = nil
     return self
 end
 

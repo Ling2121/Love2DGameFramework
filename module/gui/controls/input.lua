@@ -14,7 +14,7 @@ local input = class("input",base_ui){
         font = nil,
         font_color = nil,
         box = nil,
-        background = nil,
+        bg = nil,
     },
 
     cursor = 0,
@@ -53,9 +53,9 @@ function input:update(dt)
     end
 
     if self.locking then
-        self.remove_clock = self.remove_clock + dt
-        self.cursor_clock = self.cursor_clock + dt
-        self.move_clock = self.move_clock + dt
+        self.remove_clock = self.remove_clock + dt--删除时钟
+        self.cursor_clock = self.cursor_clock + dt--光标闪烁时钟
+        self.move_clock = self.move_clock + dt--光标移动时钟
 
         if self.cursor_clock >= self.cursor_speed then
             self.cursor_clock = 0
@@ -105,7 +105,7 @@ function input:keypressed(key)
 end
 
 function input:draw_input(x,y)
-    local wx,wy = self:get_pos()
+    local wx,wy = self:get_wpos()
     local self_font = self.style.font
     local font = self_font or ling.default_font
     local tx = x

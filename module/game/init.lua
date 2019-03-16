@@ -1,7 +1,7 @@
 local scene = require"module/game/scene"
 local signal = require"misc/signal"
 
-local game = class("game",signal){
+local game = class("game",signal){--
     all_scene = {},
     scene = nil,
 }
@@ -19,6 +19,7 @@ function game:__init()
             end
         end
     end
+    return self
 end
 
 function game.new_scene(name)
@@ -48,5 +49,10 @@ function game:change_scene(name_or_scene)
     return self
 end
 
-return game
+function get_node(name)
+    return ling.game.scene:get_node(name)
+end
+
+ling.game = game:__init()
+return ling.game
 

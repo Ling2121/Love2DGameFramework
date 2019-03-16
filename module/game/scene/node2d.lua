@@ -27,7 +27,7 @@ end
 
 function node2d:get_wpos()--获取世界坐标，位于场景中才有效
     if self.__view_id == 1 then
-        local cam = self:get_node("camera")
+        local cam = get_node("camera")
         if cam then
             return cam:to_world_pos(self.x,self.y)
         end
