@@ -1,5 +1,4 @@
 local base_ui = require"module/gui/controls/base_ui"
-local _label = require"module/gui/controls/label"
 local rectangle = require"module/graphics/rectangle"
 
 local button = class("button",base_ui){
@@ -39,10 +38,10 @@ function button:_init_style(style)
     style = style or {}
     local w,h = self.width,self.height
     self.style.font         = style.font or ling.font.default
-    self.style.font_color   = style.font_color or {10,10,10,255}
-    self.style.default      = style.default or rectangle("fill",w,h,{250,200,0,255}) 
-    self.style.hover        = style.hover   or rectangle("fill",w,h,{255,230,30,255})
-    self.style.hit          = style.hit     or rectangle("fill",w,h,{80,80,80,255})
+    self.style.font_color   = style.font_color or {180,215,247,255}
+    self.style.default      = style.default or rectangle("fill",w,h,{0,150,240,255}) 
+    self.style.hover        = style.hover   or rectangle("fill",w,h,{10,170,250,255})
+    self.style.hit          = style.hit     or rectangle("fill",w,h,{20,180,250,255})
 
     return self
 end

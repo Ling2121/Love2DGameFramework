@@ -1,6 +1,6 @@
-local base_ui = ling_import"module/gui/controls/base_ui"
+local base_ui = require"module/gui/controls/base_ui"
+local rectangle = require"module/graphics/rectangle"
 local button = ling_import"module/gui/controls/button"
-local rect = ling_import"module/graphics/rect"
 
 local slide = class("slide",base_ui){
     max = 10,
@@ -34,11 +34,11 @@ function slide:_init_style(mode,style)
     self.sdb_w = sdb_w
     self.sdb_h = sdb_h
 
-    local r = rect("fill",sdb_w,sdb_h,{210,70,0,255})
+    local r = rectangle("fill",sdb_w,sdb_h,{210,70,0,255})
     self.style.font             = style.font
     self.style.font_color       = style.font_color or {104,18,0,255}
-    self.style.slide            = style.slide or rect("fill",self.w,self.h,{255,123,0,255})
-    self.style.box              = style.box or rect("line",self.w,self.h,{210,70,0,255})
+    self.style.slide            = style.slide or rectangle("fill",self.w,self.h,{255,123,0,255})
+    self.style.box              = style.box or rectangle("line",self.w,self.h,{210,70,0,255})
     self.style.button.default   = style.button.default or r
     self.style.button.hover     = style.button.hover or r
     self.style.button.hit       = style.button.hit or r

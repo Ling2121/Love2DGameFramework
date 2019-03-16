@@ -2,23 +2,47 @@ local ling = require"ling_init"
 
 local game = require"module/game"()
 local scene = require"module/game/scene"("test_scene")
-local ui_box = require"module/gui/ui_box"():set_drag(true):set_view(1)
+local ui_box = require"module/gui/ui_box"
+local ui_mng = require"module/gui/ui_mng"():set_view(1)
+
+
 local label = require"module/gui/controls/label"
 local button = require"module/gui/controls/button"
+local input = require"module/gui/controls/input"
 
 local cam = scene:get_node("camera")
+
+local ui_box_a = ui_box():set_view(1):set_drag(true)
+local ui_box_b = ui_box():set_view(1):set_drag(true)
 --cam:lookAt(0,0)
+
+local label_b = label("Hello",100,100):set_drag(true)
 
 local label_a = label("Hello",0,0):set_drag(true)
 
-local label_b = label("Hello",100,100):set_drag(true):set_root(label_a)
-
 local button_a = button("Button",200,100,100,40):set_drag(true)
 
-ui_box:add_controls(label_a)
+local input_a = input(300,100,120,40)
 
-ui_box:add_controls(button_a)
-scene:add_node(ui_box)
+
+
+ui_box_a:add_controls(label_a)
+ui_box_a:add_controls(button_a)
+
+
+
+ui_box_a:add_controls(input_a)
+ui_box_b:add_controls(button("Button",200,100,100,40):set_drag(true))
+ui_box_b:add_controls(button("Button",200,150,100,40):set_drag(true))
+
+
+ui_mng:add_controls(ui_box_a)
+ui_mng:add_controls(ui_box_b)
+--main_ui_box:add_controls(ui_box_a)
+--main_ui_box:add_controls(ui_box_b)
+
+--scene:add_node(main_ui_box)
+scene:add_node(ui_mng)
 
 game:add_scene(scene)
 :change_scene("test_scene")

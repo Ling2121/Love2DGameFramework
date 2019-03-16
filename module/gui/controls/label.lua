@@ -3,8 +3,8 @@ local base_ui = require"module/gui/controls/base_ui"
 local label = class("label",base_ui){
     label = "Label",
     style = {
-        font = ling.font.default,
-        font_color = {255,255,255,255}
+        font = nil,
+        font_color = nil,
     }
 }
 

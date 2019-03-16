@@ -71,17 +71,6 @@ function base_ui:set_root(root)
     return self
 end
 
-function base_ui:add_fuse(object)
-    self.fuse[object] = object
-    object.is_fuse_root = false
-    return self
-end
-
-function base_ui:set_is_fuse_root(bool)
-    self.is_fuse_root = bool
-    return self
-end
-
 function base_ui:set_drag(bool)
     self.drag = bool
     return self

@@ -1,7 +1,5 @@
 ling = {
-    font = {
-        default = love.graphics.newFont("assets/font/default.otf",15)
-    }
+    font = {}
 }
 
 love_callback = {
@@ -18,7 +16,9 @@ love_callback = {
 }
 
 function load()
-    class = require"misc/class"
+	love.graphics.setDefaultFilter("nearest","nearest")
+	class = require"misc/class"
+	ling.font.default = love.graphics.newFont("assets/font/default.otf",16)
     love.graphics.setFont(ling.font.default)
     return ling
 end
