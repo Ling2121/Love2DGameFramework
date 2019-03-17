@@ -18,6 +18,8 @@ function node:__init_signal__()
     self:signal("exit_wait")
     self:signal("exit_scene")
     self:signal("exit_scene")
+    self:signal("add_to_scene")
+    self:signal("remove_from_scene")
 end
 
 function node:set_node_name(name)

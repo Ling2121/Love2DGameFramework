@@ -41,8 +41,6 @@ function scene:__init_callback__()
 end
 
 function scene:__init_signal__()
-    self:signal("node_add")
-    self:signal("node_remove")
     self:signal("scene_init")
     self:signal("scene_load")
     self:signal("scene_enter")
@@ -64,14 +62,12 @@ function scene:add_node(node,is_static)
         self.nodes:insert_node(node)
         :_enter_scene(self)
         :set_node_name(node_name)
-
-        self:release("add_node",node)
     else
         node.__is_static = true
         self.nodes.__all_node[node] = node
         self.nodes.__all_node[node.__node_name] = node
     end
-
+    node:release("add_to_scene",self)
     return self
 end
 
@@ -87,9 +83,8 @@ function scene:remove_node(node_or_name)
             else
                 nodes:remove_self(node)
                 nodes.__all_node[node.__node_name] = nil
-
-                self:release("remove_node",node)
             end
+            node:release("remove_from_scene",self)
         end
     end
 end

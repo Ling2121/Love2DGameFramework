@@ -8,7 +8,10 @@ local game = class("game",signal){--
 
 function game:__init()
     self:signal("change_scene")
+    self:__init_callback__()
+end
 
+function game:__init_callback__()
     for i,call_name in ipairs(love_callback) do
         love[call_name] = function(...)
             local scene = self.scene
@@ -19,7 +22,6 @@ function game:__init()
             end
         end
     end
-    return self
 end
 
 function game.new_scene(name)
@@ -61,6 +63,6 @@ function get_game()
     return ling.game
 end
 
-ling.game = game:__init()
+ling.game = game()
 return ling.game
 
