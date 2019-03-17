@@ -1,3 +1,6 @@
+--[[
+    信号机制
+--]]
 local single_signal = require"misc/signal/single_signal"
 
 local signal = class("signal"){
@@ -38,7 +41,7 @@ function signal:disconnect(signal_name)
             signal:disconnect(self)
             self.__all_connect[signal_name] = nil
         end
-    else
+    else--没有传入名称时与所有信号断开连接
         for _,signal in pairs(self.self.__all_disconnect) do
             signal:disconnect(self)
         end

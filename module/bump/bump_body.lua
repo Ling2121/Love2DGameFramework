@@ -1,8 +1,11 @@
+--[[
+    碰撞体
+--]]
 local bump_body = class("bump_body"){
     _id = 0,
     _layer = 0,
     _wait = false,
-    shapes = nil,
+    shapes = nil,--这是一个HC形状对象
     at_world = nil,
 }
 

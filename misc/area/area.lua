@@ -1,3 +1,6 @@
+--[[
+    基本的区域对象
+--]]
 local rectangle = require"module/struct/shapes/rectangle"
 local node2d = require"module/game/scene/node2d"
 

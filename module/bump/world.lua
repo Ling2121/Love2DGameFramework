@@ -1,17 +1,20 @@
+--[[
+    碰撞世界
+--]]
 local world = require"library/hc.spatialhash"
 
-function world:is_at_world(object)
+function world:is_at_world(object)--判断物体是否在世界中
     if not object then return end
     return self.all_shapes[object] ~= nil
 end
 
-function world:is_test(object_a,object_b)
+function world:is_test(object_a,object_b)--判断两个物体是否需要进行碰撞测试
     local body_a = object_a:get_bump_body()
     local body_b = object_b:get_bump_body()
 
-    if not body_a._wait and not body_b._wait then
-        if body_a._layer == body_b._layer then
-            return body_a._id ~= body_b._id
+    if not body_a._wait and not body_b._wait then--任何一个在休息状态是不进行碰撞测试
+        if body_a._layer == body_b._layer then--相同曾的物体才会进行碰撞检测
+            return body_a._id ~= body_b._id--不同ID的物体才会进行碰撞检测
         end
     end
 end

@@ -1,3 +1,6 @@
+--[[
+    单个信号
+--]]
 local single_signal = class("single_signal"){
     name = "",
     all_connect = {},
@@ -10,8 +13,8 @@ function single_signal:connect(object,conn_func_name)
         fname = conn_func_name,
         index = i
     }
-    table.insert(self.all_connect,conn)
-    self.all_connect[object] = conn
+    table.insert(self.all_connect,conn)--先到先得
+    self.all_connect[object] = conn--快速删除，免得搜索
 end
 
 function single_signal:release(...)

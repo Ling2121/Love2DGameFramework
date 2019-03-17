@@ -1,3 +1,7 @@
+--[[
+    有限状态机
+    1万年前写的了。。。。那时候没加注释
+--]]
 local fsm_callback = {
     "keypressed",
 	"keyreleased",

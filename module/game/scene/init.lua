@@ -1,3 +1,6 @@
+--[[
+    场景(节点管理器)
+--]]
 local list = require"module/struct/depth_list"
 local camera = require"module/game/camera"
 local signal = require"misc/signal"
@@ -50,7 +53,7 @@ function scene:init()end--第一次加载场景时执行
 
 function scene:load()end--加载场景时执行
 
-function scene:get_node(name)
+function scene:get_node(name)--通过名称获取节点,节点如果没命名，默认是他本身
     return self.nodes.__all_node[name]
 end
 

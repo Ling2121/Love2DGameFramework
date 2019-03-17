@@ -49,8 +49,16 @@ function game:change_scene(name_or_scene)
     return self
 end
 
-function get_node(name)
+function get_node(name)--获取当前场景的节点
     return ling.game.scene:get_node(name)
+end
+
+function get_scene()
+    return ling.game.scene
+end
+
+function get_game()
+    return ling.game
 end
 
 ling.game = game:__init()
