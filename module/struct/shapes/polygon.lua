@@ -2,7 +2,7 @@ local polygon = class("polygon"){
     points = {0,0,0,0,0,0}
 }
 
-function polygon:__init(polygon)
+function polygon:__init(points)
     base_shapes.__init(self,"circle")
     self.points = points or {0,0,0,0,0,0}
 end

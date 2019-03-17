@@ -25,9 +25,8 @@ function rectangle:set_color(color)
 end
 
 function rectangle:draw(x,y)
-    local m,x,y = self.mode,x,y
     love.graphics.setColor(unpack(self.color))
-    _rectangle.draw(self,m,x,y)
+    _rectangle.draw(self,self.mode,x,y)
     love.graphics.setColor(255,255,255,255)
 end
 
