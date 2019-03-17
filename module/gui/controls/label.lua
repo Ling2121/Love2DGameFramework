@@ -5,6 +5,7 @@ local label = class("label",base_ui){
     style = {
         font = nil,
         font_color = nil,
+        bg = nil,
     }
 }
 
@@ -19,6 +20,7 @@ function label:_load_style(style)
     style = style or {}
     self.style.font = style.font or ling.font.default
     self.style.font_color = style.font_color or {255,255,255,255}
+    self.style.bg = style.bg
 end
 
 function label:set_label(label)
@@ -36,6 +38,9 @@ function label:draw()
     local x,y = self:get_pos()
     local sf,df = self.style.font,ling.font.default
     local is_set = (sf ~= df)
+    if self.style.bg then
+        self.style.bg:draw(x,y)
+    end
     if is_set then
         love.graphics.setFont(sf)
     end

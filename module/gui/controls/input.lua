@@ -32,6 +32,7 @@ function input:__init(x,y,w,h,style)
     base_ui.__init(self,x,y,w,h)
     self:_init_style(style)
     self:signal("confirm_input")
+    self:signal("input")
 end
 
 function input:_init_style(style)
@@ -71,6 +72,7 @@ function input:update(dt)
                     local l_str = utf8.sub(str,pos + 1,utf8.len(str))
                     self.input_text = r_str..l_str
                     self.cursor = math.max(0,self.cursor - 1)
+                    self:release("input",self.input_text)
                 end
             end
         end
@@ -90,6 +92,8 @@ function input:textinput(text)
     if self.locking then
         self.input_text = insert_str(self.input_text,self.cursor,text)
         self.cursor = math.min(self.cursor + 1,utf8.len(self.input_text))
+        self.final_input = self.input_text
+        self:release("input",self.input_text)
     end
 end
 

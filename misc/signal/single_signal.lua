@@ -18,7 +18,7 @@ function single_signal:release(...)
     for i,connect in ipairs(self.all_connect) do
         local obj = connect.object
         local conn_func = obj[connect.fname]
-        conn_func(obj)--执行对应连接函数
+        conn_func(obj,...)--执行对应连接函数
     end
 end
 

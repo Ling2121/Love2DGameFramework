@@ -15,9 +15,19 @@ function rectangle:__init(mode,w,h,color)
     self.color[4] = color[4] or 255
 end
 
+function rectangle:set_color(color)
+    color = color or {}
+    self.color[1] = color[1] or 255
+    self.color[2] = color[2] or 255
+    self.color[3] = color[3] or 255
+    self.color[4] = color[4] or 255
+    return self
+end
+
 function rectangle:draw(x,y)
+    local m,x,y = self.mode,x,y
     love.graphics.setColor(unpack(self.color))
-    _rectangle.draw(self,self.mode,x,y)
+    _rectangle.draw(self,m,x,y)
     love.graphics.setColor(255,255,255,255)
 end
 
