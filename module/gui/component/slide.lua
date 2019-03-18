@@ -29,7 +29,7 @@ function slide:__btn_sliding__()
 end
 
 function slide:__add__(box)
-    box:add_component(self.slide_button)
+    box:add_component(self.slide_button:set_depth(self:get_depth() + 1))
 end
 
 function slide:__remove__(box)
@@ -52,9 +52,9 @@ function slide:_init_style(mode,style)
 
     local r = rectangle("fill",sdb_w,sdb_h,{210,70,0,255})
     self.style.font             = style.font
-    self.style.font_color       = style.font_color or {175,215,247,255}
-    self.style.bg               = style.bg or rectangle("fill",self.width,self.height,{175,215,247,255})
-    self.style.box              = style.box or rectangle("line",self.width,self.height,{0,150,240,255})
+    self.style.font_color       = style.font_color or {226,101,11,255}
+    self.style.box              = style.box or rectangle("line",self.width,self.height,{226,101,11,255})
+    self.style.bg               = style.bg or rectangle("fill",self.width,self.height,{255,215,155,255})
     self.style.button.default   = style.button.default or r
     self.style.button.hover     = style.button.hover or r
     self.style.button.hit       = style.button.hit or r
@@ -66,7 +66,6 @@ function slide:_init_style(mode,style)
     })
     :set_drag(true)
     :set_root(self)
-    :set_depth(self.y + 1)
 
     if mode == "V" then
         function self.slide_button:drag_move()
@@ -170,10 +169,7 @@ end
 function slide:draw()
     local x,y = self:get_pos()
     self.style.bg:draw(x,y)
-    local up_lw = love.graphics.getLineWidth()
-    love.graphics.setLineWidth(3)
     self.style.box:draw(x,y)
-    love.graphics.setLineWidth(up_lw)
     if self.is_draw_value then
         self:draw_value(x,y)
     end

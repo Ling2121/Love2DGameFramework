@@ -19,7 +19,7 @@ end
 function label:_load_style(style)
     style = style or {}
     self.style.font = style.font or ling.font.default
-    self.style.font_color = style.font_color or {255,255,255,255}
+    self.style.font_color = style.font_color or {226,101,11,255}
     self.style.bg = style.bg
 end
 

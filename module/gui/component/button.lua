@@ -38,10 +38,10 @@ function button:_init_style(style)
     style = style or {}
     local w,h = self.width,self.height
     self.style.font         = style.font or ling.font.default
-    self.style.font_color   = style.font_color or {180,215,247,255}
-    self.style.default      = style.default or rectangle("fill",w,h,{0,150,240,255}) 
-    self.style.hover        = style.hover   or rectangle("fill",w,h,{10,170,250,255})
-    self.style.hit          = style.hit     or rectangle("fill",w,h,{20,180,250,255})
+    self.style.font_color   = style.font_color or {255,215,155,255}
+    self.style.default      = style.default or rectangle("fill",w,h,{226,101,11,255}) 
+    self.style.hover        = style.hover   or rectangle("fill",w,h,{236,111,22,255})
+    self.style.hit          = style.hit     or rectangle("fill",w,h,{246,122,33,255})
 
     return self
 end

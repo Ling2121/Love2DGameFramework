@@ -3,6 +3,7 @@ local area_mng = require"misc/area/area_mng"
 
 local ui_box = class("ui_box",base_ui,area_mng){
     __ui_mng = true,
+    __draw_box = false,
 }
 
 function ui_box:__init(x,y,w,h)
@@ -31,6 +32,11 @@ function ui_box:add_component(component)
         component.root = self
     end
     component:release("add_to_box",self)
+    return self
+end
+
+function ui_box:set_draw_box(bool)
+    self.__draw_box = bool
     return self
 end
 
@@ -90,18 +96,22 @@ function ui_box:draw()
         love.graphics.setScissor(world_x,world_y,self.width,self.height)
     else
         if world_x > sx or world_y > sy then
-            local w,h = sw - (world_x - sx),sh - (world_y - sy)
+            local w,h = math.abs(sw - (world_x - sx)),math.abs(sh - (world_y - sy))
             love.graphics.setScissor(world_x,world_y,w,h)
         else
-            local w,h = ((world_x + self.width) - sx),((world_y + self.height) - sy)
+            local w,h = math.abs(((world_x + self.width) - sx)),math.abs(((world_y + self.height) - sy))
             love.graphics.setScissor(sx,sy,w,h)
         end
     end
     for ui in self.all_area:items() do
-        ui:draw()
+        if ui.draw then
+            ui:draw()
+        end
     end
     love.graphics.setScissor(sx, sy, sw, sh)
-    love.graphics.rectangle("line",x,y,self.width,self.height)
+    if self.__draw_box then
+        love.graphics.rectangle("line",x,y,self.width,self.height)
+    end
 end
 
 return ui_box

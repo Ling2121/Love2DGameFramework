@@ -56,7 +56,9 @@ end
 
 function ui_mng:draw()
     for ui in self.all_area:items() do
-        ui:draw()
+        if ui.draw then
+            ui:draw()
+        end
     end
 end
 

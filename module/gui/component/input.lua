@@ -39,9 +39,9 @@ function input:_init_style(style)
     style = style or {}
     local w,h = self.width,self.height
     self.style.font         = ling.font.default
-    self.style.font_color   = style.font_color or {0,150,240,255}
-    self.style.box          = style.box or rectangle("line",w,h,{0,150,240,255})
-    self.style.bg           = style.bg or rectangle("fill",w,h,{175,215,247,255})
+    self.style.font_color   = style.font_color or {226,101,11,255}
+    self.style.box          = style.box or rectangle("line",w,h,{226,101,11,255})
+    self.style.bg           = style.bg or rectangle("fill",w,h,{255,215,155,255})
 end
 
 function input:update(dt)
@@ -137,7 +137,7 @@ function input:draw_input(x,y)
     love.graphics.setColor(unpack(self.style.font_color))
     love.graphics.print(self.input_text,tx - self.text_draw_offset,ty)
     if self.locking and self.cursor_draw then
-        cux = (cux + cw - self.text_draw_offset)
+        cux = (cux + cw - self.text_draw_offset) + 2
         local cuh = self.height * 0.5
         love.graphics.rectangle("fill",cux,wy + self.height / 2 - cuh/2,2,cuh)
         love.graphics.setColor(255,255,255,100)
@@ -149,10 +149,7 @@ end
 function input:draw()
     local x,y = self:get_pos()
     self.style.bg:draw(x,y)
-    local up_lw = love.graphics.getLineWidth()
-    love.graphics.setLineWidth(3)
     self.style.box:draw(x,y)
-    love.graphics.setLineWidth(up_lw)
     self:draw_input(x,y)
 end
 
