@@ -27,14 +27,16 @@ function ui_mng:set_view(id)
     return self
 end
 
-function ui_mng:add_controls(contrls)
-    area_mng.add_area(self,contrls)
-    contrls.__view_id = self.__view_id
+function ui_mng:add_controls(component)
+    area_mng.add_area(self,component)
+    component.__view_id = self.__view_id
+    component:release("add_to_box",self)
     return self
 end
 
-function ui_mng:remove_contrls(contrls)
-    area_mng.remove_area(self,contrls)
+function ui_mng:remove_component(component)
+    component:release("remove_from_box",self)
+    area_mng.remove_area(self,component)
     return self
 end
 

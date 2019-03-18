@@ -1,6 +1,6 @@
-local base_ui = require"module/gui/controls/base_ui"
+local base_ui = require"module/gui/component/base_ui"
 local rectangle = require"module/graphics/rectangle"
-local button = require"module/gui/controls/button"
+local button = require"module/gui/component/button"
 
 local slide = class("slide",base_ui){
     max = 10,
@@ -18,12 +18,22 @@ function slide:__init(mode,x,y,w,h,max,style)
     :set_depth(self.y)
     self:connect(self,"mouse_exit","__mouse_exit__")
     self:connect(self.slide_button,"sliding","__btn_sliding__")
+    self:connect(self,"add_to_box","__add__")
+    self:connect(self,"remove_from_box","__remove__")
     self:signal("drag")
 end
 
 function slide:__btn_sliding__()
     local v = self:get_value()
     self:release("drag",v)
+end
+
+function slide:__add__(box)
+    box:add_component(self.slide_button)
+end
+
+function slide:__remove__(box)
+    box:remove_component(self.slide_button)
 end
 
 function slide:_init_style(mode,style)

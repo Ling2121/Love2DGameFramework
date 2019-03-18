@@ -1,7 +1,7 @@
-local base_ui = ling_import"module/gui/controls/base_ui"
+local base_ui = ling_import"module/gui/component/base_ui"
 local rect = ling_import"module/graphics/rect"
-local button = ling_import"module/gui/controls/button"
-local slide = ling_import"module/gui/controls/slide"
+local button = ling_import"module/gui/component/button"
+local slide = ling_import"module/gui/component/slide"
 local ui_mng = ling_import"module/gui/ui_mng"
 local list = ling_import"misc/list"
 
@@ -118,8 +118,8 @@ end
 
 function window:__add_to_scene__(scene)
     self.camera = scene.camera
-    scene:add_controls(self.style.h_slide)
-    scene:add_controls(self.style.v_slide)
+    scene:add_component(self.style.h_slide)
+    scene:add_component(self.style.v_slide)
 
     for ui in self.nodes:items() do
         ui.__view_id = self.__view_id

@@ -1,4 +1,4 @@
-local base_ui = require"module/gui/controls/base_ui"
+local base_ui = require"module/gui/component/base_ui"
 local rectangle = require"module/graphics/rectangle"
 local utf8 = require"library/utf8_simple"
 local lksd = love.keyboard.isDown

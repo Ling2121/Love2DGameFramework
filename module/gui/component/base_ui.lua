@@ -2,8 +2,6 @@ local area = require"misc/area/area"
 
 local base_ui = class("base_ui",area){
     root = nil,
-    fuse = nil,
-    child = {},
     style = {},
     drag = false,
     locking = false,
@@ -14,6 +12,8 @@ local base_ui = class("base_ui",area){
 function base_ui:__init_signal__()
     area.__init_signal__(self)
     self:signal("sliding")
+    self:signal("add_to_box")
+    self:signal("remove_form_box")
 end
 
 function base_ui:get_pos()
@@ -67,7 +67,6 @@ function base_ui:set_root(root)
         self.root.child[self] = nil
     end
     self.root = root
-    self.root.child[self] = self
     return self
 end
 

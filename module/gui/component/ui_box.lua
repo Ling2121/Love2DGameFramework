@@ -1,4 +1,4 @@
-local base_ui = require"module/gui/controls/base_ui"
+local base_ui = require"module/gui/component/base_ui"
 local area_mng = require"misc/area/area_mng"
 
 local ui_box = class("ui_box",base_ui,area_mng){
@@ -24,22 +24,19 @@ function ui_box:__init_callback__()
     end
 end
 
-function ui_box:add_controls(contrls)
-    area_mng.add_area(self,contrls)
-    contrls.__view_id = self.__view_id
-    if not contrls.root then
-        contrls.root = self
+function ui_box:add_component(component)
+    area_mng.add_area(self,component)
+    component.__view_id = self.__view_id
+    if not component.root then
+        component.root = self
     end
-    if not contrls.__ui_mng then
-        for child in pairs(contrls.child) do
-            self:add_controls(child)
-        end
-    end
+    component:release("add_to_box",self)
     return self
 end
 
-function ui_box:remove_contrls(contrls)
-    area_mng.remove_area(self,contrls)
+function ui_box:remove_component(component)
+    component:release("remove_to_box",self)
+    area_mng.remove_area(self,component)
     return self
 end
 
