@@ -33,7 +33,6 @@ function push_ui(color,set_color_i)
     inp.style.bg:set_color(bg_c)
     sli.style.box:set_color(box_c)
     sli.style.bg:set_color(bg_c)
-    ui_box_a:add_component(inp)
     ui_y = ui_y + h
 
     inp:connect(sli,"drag","__drag__")
@@ -51,6 +50,9 @@ function push_ui(color,set_color_i)
         self:set_value(value or 0)
         rect.color[set_color_i] = value
     end
+
+    ui_box_a:add_component(inp)
+    ui_box_a:add_component(sli)
 end
 
 

@@ -27,7 +27,7 @@ function ui_mng:set_view(id)
     return self
 end
 
-function ui_mng:add_controls(component)
+function ui_mng:add_component(component)
     area_mng.add_area(self,component)
     component.__view_id = self.__view_id
     component:release("add_to_box",self)
