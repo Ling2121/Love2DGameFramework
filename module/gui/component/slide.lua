@@ -18,22 +18,12 @@ function slide:__init(mode,x,y,w,h,max,style)
     :set_depth(self.y)
     self:connect(self,"mouse_exit","__mouse_exit__")
     self:connect(self.slide_button,"sliding","__btn_sliding__")
-    self:connect(self,"add_to_box","__add__")
-    self:connect(self,"remove_from_box","__remove__")
     self:signal("drag")
 end
 
 function slide:__btn_sliding__()
     local v = self:get_value()
     self:release("drag",v)
-end
-
-function slide:__add__(box)
-    box:add_component(self.slide_button:set_depth(self:get_depth() + 1))
-end
-
-function slide:__remove__(box)
-    box:remove_component(self.slide_button)
 end
 
 function slide:_init_style(mode,style)
@@ -143,15 +133,32 @@ function slide:wheelmoved(x,y)
             sdb.x = sdb.x + y
         end
     end
+    local v = self:get_value()
+    self:release("drag",v)
     self.locking = true
 end
 
-function slide:update()
-    if self.locking then
-        if not self:is_hover() then
-            self.locking = false
-        end
+function slide:update(dt)
+    local sd = self.slide_button
+    sd.__is_select = sd:is_hover()
+    sd:update(dt)
+    base_ui.update(self,dt)
+end
+
+function slide:mousepressed(mox,moy)
+    local sd = self.slide_button
+    if sd.__is_select then
+        sd:mousepressed(mox,moy)
     end
+    base_ui.mousepressed(self,mox,moy)
+    self.locking = true
+end
+
+function slide:mousereleased()
+    local sd = self.slide_button
+    sd:mousereleased()
+    base_ui.mousereleased(self)
+    self.locking = false
 end
 
 function slide:draw_value(x,y)
@@ -179,6 +186,7 @@ function slide:draw()
     local x,y = self:get_pos()
     self.style.bg:draw(x,y)
     self.style.box:draw(x,y)
+    self.slide_button:draw()
     if self.is_draw_value then
         self:draw_value(x,y)
     end

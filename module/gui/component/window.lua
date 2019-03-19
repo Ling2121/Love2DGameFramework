@@ -49,7 +49,7 @@ function window:__init(title,x,y,w,h,style)
 
     self.title_text_x = title_t_x
     self.title_text_y = title_t_y
-    self.title_rect = base_ui(y,x,title_w,title_h):set_depth(depth + 1)--:set_drag(true)
+    self.title_rect = base_ui(x,y,title_w,title_h):set_depth(depth + 1)--:set_drag(true)
     self.x_slide = slide("H",x_slide_x,x_slide_y,x_slide_w,x_slide_h):set_depth(depth + 2)
     self.y_slide = slide("V",y_slide_x,y_slide_y,y_slide_w,y_slide_h):set_depth(depth + 3)
     self.content_box = ui_box(title_x,title_y,self.width,self.height):set_depth(depth - 1)
@@ -138,6 +138,14 @@ end
 
 function window:remove_component(component)
     self.content_box:remove_component(component)
+end
+
+function window:wheelmoved(x,y)
+    if love.keyboard.isDown("lshift") then
+        self.x_slide:wheelmoved(x,y)
+    else
+        self.y_slide:wheelmoved(x,y)
+    end
 end
 
 function window:draw_title()
