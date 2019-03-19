@@ -66,6 +66,16 @@ function window:__init(title,x,y,w,h,style)
     self:connect(self,"remove_from_box","__remove__")
     self:connect(self.x_slide,"drag","__x_drag__")
     self:connect(self.y_slide,"drag","__y_drag__")
+
+    function self.content_box:draw()
+        local x,y = self:get_pos()
+        love.graphics.setColor(unpack(self.style.bg))
+        love.graphics.rectangle("fill",x - 10,y - 10,self.width + 10,self.height + 10)
+        love.graphics.setColor(255,255,255,255)
+        ui_box.draw(self)
+    end
+    self.max_x = self.width + 10
+    self.max_y = self.height + 10
 end
 
 function window:_init_style(style)
@@ -101,7 +111,7 @@ function window:update_content_x_max(component)
     local x = component.x + component.width
     if x > self.max_x then
         self.max_x = x
-        self.content_box.width = self.content_box.width + component.width
+        self.content_box.width = x + component.width
         self.x_slide:set_max(self.content_box.width - self.width)
     end
 end
@@ -110,7 +120,7 @@ function window:update_content_y_max(component)
     local y = component.y + component.height
     if y > self.max_y then
         self.max_y = y
-        self.content_box.height = self.content_box.height + component.height
+        self.content_box.height = y + component.height
         self.y_slide:set_max(self.content_box.height - self.height)
     end
 end

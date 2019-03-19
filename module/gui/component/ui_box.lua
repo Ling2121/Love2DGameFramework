@@ -92,17 +92,7 @@ function ui_box:draw()
     local world_x,world_y = self:get_wpos()
     local x,y = self:get_pos()
     local sx, sy, sw, sh = love.graphics.getScissor()
-    if sx == 0 or sx == 0 then
-        love.graphics.setScissor(world_x,world_y,self.width,self.height)
-    else
-        if world_x > sx or world_y > sy then
-            local w,h = math.abs(sw - (world_x - sx)),math.abs(sh - (world_y - sy))
-            love.graphics.setScissor(world_x,world_y,w,h)
-        else
-            local w,h = math.abs(((world_x + self.width) - sx)),math.abs(((world_y + self.height) - sy))
-            love.graphics.setScissor(sx,sy,w,h)
-        end
-    end
+    love.graphics.intersectScissor(world_x,world_y,self.width,self.height)
     for ui in self.all_area:items() do
         if ui.draw then
             ui:draw()

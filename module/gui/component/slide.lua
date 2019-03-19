@@ -143,6 +143,15 @@ function slide:wheelmoved(x,y)
             sdb.x = sdb.x + y
         end
     end
+    self.locking = true
+end
+
+function slide:update()
+    if self.locking then
+        if not self:is_hover() then
+            self.locking = false
+        end
+    end
 end
 
 function slide:draw_value(x,y)
