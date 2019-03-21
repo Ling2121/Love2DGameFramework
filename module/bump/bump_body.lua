@@ -9,10 +9,10 @@ local bump_body = class("bump_body"){
     at_world = nil,
 }
 
-function bump_body:__init(shapes,id,layer)
+function bump_body:__init(shapes)
     self.shapes = shapes
-    self._id = id or self
-    self._layer = layer or 0
+    self._id = self
+    self._layer = 0
 end
 
 function bump_body:get_bump_body()
